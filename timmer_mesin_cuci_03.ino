@@ -4,6 +4,7 @@ int Lmp = 2;
 int btn1 = 4;
 int stt;
 int jeda=480000;
+int nilaitombol;
 
 void setup() {
   
@@ -36,26 +37,30 @@ void setup() {
 }
 void loop()
 {
-    if(digitalRead(btn1) == HIGH){
-      if(stt==0){
-        Serial.println("Pengering: ON");
-        digitalWrite(Lmp, HIGH);
-        digitalWrite(Relay, LOW);
-        //delay(480000);
-        delay(jeda);
-        stt=1;
-        Serial.println("Pengering: OFF");
-        digitalWrite(Relay, HIGH);
-        digitalWrite(Lmp, LOW);
-      }
-    }else{
-      if(stt==1){
+  nilaitombol=digitalRead(btn1);
+  Serial.println(nilaitombol);
+  if(nilaitombol==0){
+    Serial.println("Nilai 0");
+    if(stt==1){
         digitalWrite(Relay, HIGH);
         digitalWrite(Lmp, LOW);
         stt=0;
         delay(500);
         Serial.println("Pengering: Reset-Ready");
       }
-    }
-    
+  }else{
+    Serial.println("Nilai 1");
+    if(stt==0){
+        Serial.println("Pengering: ON");
+        digitalWrite(Lmp, HIGH);
+        digitalWrite(Relay, LOW);
+        delay(480000);
+        //delay(jeda);
+        stt=1;
+        Serial.println("Pengering: OFF");
+        digitalWrite(Relay, HIGH);
+        digitalWrite(Lmp, LOW);
+      }
+  }
+  delay(1000);
 }
